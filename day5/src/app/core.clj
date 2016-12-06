@@ -11,7 +11,6 @@
   (:gen-class))
 
 (use 'digest)
-(use 'clojure.test)
 
 
 (defn password-for-door
