@@ -44,3 +44,8 @@
     	(is (= (count input) 2000)) 		; Do we read everything?
     	(is (= (count (tls input)) 118)) 	; Do we get the right result?
   		)))
+
+(deftest test-abas-in-supernets
+  (testing "Matching ABA in supernets"
+    (is (= 4 (count (abas-in-supernets "aba[bab]xyz")))) 
+    ))

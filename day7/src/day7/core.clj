@@ -24,16 +24,30 @@
 	"Get the hypernet sequences. Then make sure no abba there"
 	[ipv7]
 	(let [hypernets (re-seq #"\[\w*\]" ipv7)
-				abbas? (map contains-abba hypernets)]
+			abbas? (map contains-abba hypernets)]
 		(not (some true? abbas?))))
 	
 
 (defn tls
 	[ipv7-lst]
-	(filter (fn [s] (and (contains-abba s) (not-contains-abba-in-hypers s))) ipv7-lst))
+	(filter (fn [s] (and (contains-abba s) 
+						(not-contains-abba-in-hypers s))) 
+			ipv7-lst))
+
+
+(defn abas-in-supernets
+	"Given a string, returns all xYx sequences outside square brackets"
+	[ipv7-str]
+	(re-seq #"(?<!\[)b\w*(\w)(\w)(\1)\w*(?!\])" ipv7-str))
+
+
+(defn prn-ais
+	[]
+	(abas-in-supernets "aba[bab]xyz"))
 
 
 (defn -main
   "Prints result for both parts of day 7"
   [& args]
-  (println (count (tls (clojure.string/split-lines (slurp "./resources/day_7_input.txt"))))))
+  (println (count (tls (clojure.string/split-lines 
+  											(slurp "./resources/day_7_input.txt"))))))
