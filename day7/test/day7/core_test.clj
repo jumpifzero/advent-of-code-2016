@@ -45,7 +45,16 @@
     	(is (= (count (tls input)) 118)) 	; Do we get the right result?
   		)))
 
-(deftest test-abas-in-supernets
-  (testing "Matching ABA in supernets"
-    (is (= 4 (count (abas-in-supernets "aba[bab]xyz")))) 
-    ))
+; (deftest test-abas-in-supernets
+;   (testing "Matching ABA in supernets"
+;     (is (= 4 (count (abas-in-supernets "aba[bab]xyz")))) 
+;     ))
+
+
+(deftest test-ssl
+  (testing "Example input"
+    (is (true?  (ssl "aba[bab]xyz")))
+    (is (false? (ssl "xyx[xyx]xyx")))
+    (is (true? (ssl "aaa[kek]eke")))
+    (is (true? (ssl "zazbz[bzb]cdb")))
+  ))

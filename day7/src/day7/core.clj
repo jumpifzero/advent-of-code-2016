@@ -7,11 +7,12 @@
 ;; Tests defined in test/app/core_test.clj
 ;;
 
-(use '[clojure.string :only (split)])
-
-
 (ns day7.core
   (:gen-class))
+
+
+(use '[clojure.string :only (split)])
+(require 'clojure.set)
 
 
 (defn contains-abba
@@ -128,8 +129,51 @@
 			(split ipv7 split-pattern))))
 
 
+(defn abas
+	"All 3 char sequece like aBa from input-str. Even overlapping"
+	[input-str]
+	(let [
+		; all aba sequences even overlapping
+		matches (re-seq #"(\w)(?=(\w)(\1))" input-str)
+		; make sure b is != a
+		filtered-lst (filter (fn [v] (not= (nth v 2) (nth v 1))) matches)
+		]
+		; join into 3 char strings
+		(map (fn [v] (str (nth v 1) (nth v 2) (nth v 3))) filtered-lst)))
+
+
+(defn invert-aba
+	"Given a string aba, produces bab"
+	[istr]
+	(str (nth istr 1) (nth istr 0) (nth istr 1)))
+
+
+(defn ssl
+	""
+	[ipv7]
+	(let [
+		hypernets (hypernets ipv7)
+		supernets (supernets ipv7)
+		hyper-abas (flatten (map abas hypernets))
+		super-abas (flatten (map abas supernets))
+		hyper-babs (map invert-aba hyper-abas)
+		; now transform them into sets and intersect them
+		super-set (set super-abas) ; set of aba in supernets
+		hyper-set (set hyper-babs) ; set of bab in hypernets (inverted)
+		]
+		(> (count (clojure.set/intersection super-set hyper-set)) 0)))
+
+
+(defn count-ssl
+	"Given a list of ipv7, count the ones that are ssl"
+	[ipv7-lst]
+	(count (filter true? (map ssl ipv7-lst))))
+
+
 (defn -main
   "Prints result for both parts of day 7"
   [& args]
-  (println (count (tls (clojure.string/split-lines 
-  											(slurp "./resources/day_7_input.txt"))))))
+  (let [input (clojure.string/split-lines 
+  							(slurp "./resources/day_7_input.txt"))]
+  	(println (count (tls input)))
+  	(println (count-ssl input))))
