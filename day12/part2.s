@@ -5,7 +5,7 @@
 # We are given a pseudo assembly ("assembunny") and asked for the 
 # value of register A
 #
-# In this approach I manually translated into x86 assembly.
+# For the solution, I manually translated the input into x86 assembly.
 # Under linux, compile and run with:
 # as -g part2.s -o part2.o && ld -g part2.o -o part2
 # 
@@ -24,7 +24,7 @@
 	             # entry point. Use ld -e foo to override the default.
 _start:
 	nop
-	# set all to 0
+	# set all to 0 and C to 1
 	movl $0, %eax
 	movl $0, %ebx
 	movl $1, %ecx 	# Part 2: initialize C with 1 
@@ -33,7 +33,7 @@ _start:
 	movl $1, %eax
 	movl $1, %ebx
 	movl $26, %edx
-	jmp label1 		#jnz c 2	(c is not 0 so jump) 
+	jmp label1 		#jnz c 2	(c is not 0 so just jump) 
 	jmp label5
 
 label1:	

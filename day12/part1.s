@@ -5,7 +5,7 @@
 # We are given a pseudo assembly ("assembunny") and asked for the 
 # value of register A
 #
-# In this approach I manually translated into x86 assembly.
+# For the solution, I manually translated the input into x86 assembly.
 # Under linux, compile and run with:
 # as -g part1.s -o part1.o && ld -g part1.o -o part1
 # 
