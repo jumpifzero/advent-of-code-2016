@@ -37,18 +37,13 @@
  	))
 
 
-(deftest test4
+(deftest test-tls
   (testing "Total result"
   	(let 
   		[input (clojure.string/split-lines (slurp "./resources/day_7_input.txt"))]
     	(is (= (count input) 2000)) 		; Do we read everything?
     	(is (= (count (tls input)) 118)) 	; Do we get the right result?
   		)))
-
-; (deftest test-abas-in-supernets
-;   (testing "Matching ABA in supernets"
-;     (is (= 4 (count (abas-in-supernets "aba[bab]xyz")))) 
-;     ))
 
 
 (deftest test-ssl

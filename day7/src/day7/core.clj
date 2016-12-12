@@ -6,6 +6,10 @@
 ;;
 ;; Tests defined in test/app/core_test.clj
 ;;
+;; Not entirely happy with these as things could be 
+;; refactored to get both parts using common functions...
+;;
+
 
 (ns day7.core
   (:gen-class))
@@ -14,6 +18,9 @@
 (use '[clojure.string :only (split)])
 (require 'clojure.set)
 
+;; =================
+;; Part 1
+;; =================
 
 (defn contains-abba
 	[ipv7]
@@ -40,71 +47,9 @@
 		ipv7-lst))
 
 
-(defn abas-in-supernets
-	"Given a string, returns all xYx sequences outside square brackets"
-	[ipv7-str]
-	(let 
-		[ais (re-seq #"(?<!\[)(?=\w*)(\w)(?=(\w)(\1))(?=\w*)(?!\])" 
-					ipv7-str)]
-		;; ais (abas-in-supernets) is a list of vectors or nil:
-		;; e.g. for input "abaca[123]abc", returns
-		;; 			(["a" "a" "b" "a"] ["a" "a" "c" "a"]) 
-		;; The regex uses a char X (\w) followed by a lookahead matching
-		;; Y and X. We use a lookahead instead of a literal match
-		;; so that Yx is not consumed from the input. This allows
-		;; it to pickup overlapping ABAs: xYxZx -> xYx | xZx.
-		;; The regex above picks up AAA as well which is invalid so we 
-		;; filter them out below.
-		(if (not (nil? ais))
-			(let [filtered-lst (filter (fn [v] (not= (nth v 2) (nth v 1))) ais)]
-				(if (empty? filtered-lst)
-					nil	; if after filtering we get an empty list, return nil
-					filtered-lst)) 
-			ais) ;nil
-		))
-
-
-(defn abas-in-hypernets
-	"Given a string, returns all xYx sequences inside square brackets"
-	[ipv7-str]
-	(let 
-		[aih (re-seq #"(?<=\[)(?=\w*)(\w)(?=(\w)(\1))(?=\w*)(?=\])" 
-					ipv7-str)]
-		;; See abas-in-supernets for how the regex works. 
-		;; It is very similar
-		(if (not (nil? aih))
-			(let [filtered-lst (filter (fn [v] (not= (nth v 2) (nth v 1))) aih)]
-				(if (empty? filtered-lst)
-					nil	; if after filtering we get an empty list, return nil
-					filtered-lst)) 
-			aih) ;nil
-		))
-
-
-(defn prn-ais
-	[]
-	(list 
-		(abas-in-supernets "aba[bab]xyz")
-		(abas-in-supernets "abc[aba]xyz")
-		(abas-in-supernets "daba[aba]ede")
-		(abas-in-supernets "dabao[aba]ede")
-		(abas-in-supernets "ddfgfo[aba]ede")
-		(abas-in-supernets "abaca[123]abc")
-		(abas-in-supernets "aaaa[123]abc")
-		))
-
-
-(defn prn-aih
-	[]
-	(list 
-		(abas-in-hypernets "aba[bab]xyz")
-		(abas-in-hypernets "abc[aba]xyz")
-		(abas-in-hypernets "daba[aba]ede")
-		(abas-in-hypernets "dabao[aba]ede")
-		(abas-in-hypernets "ddfgfo[aba]ede")
-		(abas-in-hypernets "abaca[123]abc")
-		(abas-in-hypernets "aaaa[123]abc")
-		))
+;; =================
+;; Part 2
+;; =================
 
 
 (defn hypernets 
