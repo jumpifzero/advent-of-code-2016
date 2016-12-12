@@ -7,12 +7,12 @@
 #
 # In this approach I manually translated into x86 assembly.
 # Under linux, compile and run with:
-# as -g part1.s -o part1.o && ld -g part1.o -o part1
+# as -g part2.s -o part2.o && ld -g part2.o -o part2
 # 
 # The program does not print the value of register A, you need to use
 # gdbtui to inspect it :P To do it, do the following:
 #
-# gdbtui part1
+# gdbtui part2
 # b 74 (Set a breakpoint on line 74)
 # run
 # info registers (rax contains the value you want)
