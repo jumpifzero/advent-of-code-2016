@@ -70,7 +70,7 @@ label6:
 	dec %ecx
 	test %ecx, %ecx
 	jne label7			
-	# This bit below is a print Hello world.
+	# Print Hello world.
 	movl    $len, %edx          # third argument: message length
 	movl    $msg, %ecx          # second argument: pointer to message to write
 	movl    $1, %ebx            # first argument: file handle (stdout)
@@ -87,4 +87,4 @@ msg:
 .ascii    "Hello, world!\n"   	# our dear string
 len = . - msg                 	# length of our dear string
 
-# The result is 900813 inverted
+# The result is 3667229 inverted

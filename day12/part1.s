@@ -69,7 +69,7 @@ label6:
 	dec %ecx
 	test %ecx, %ecx
 	jne label7			
-	# This bit below is a print Hello world.
+	# Print Hello world.
 	movl    $len, %edx          # third argument: message length
 	movl    $msg, %ecx          # second argument: pointer to message to write
 	movl    $1, %ebx            # first argument: file handle (stdout)
